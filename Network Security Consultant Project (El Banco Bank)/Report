@@ -1,0 +1,230 @@
+# 🛡️ Case Study: Network Security Consulting for El Banco Bank
+
+This case study outlines the responsibilities, analysis, and solutions provided while working as a **Network Security Consultant** for *El Banco Bank*, a fast-growing European financial institution with over 1200 branches and €200 billion in managed assets.
+
+The work completed spans **certificate troubleshooting**, **cloud inbound rule configuration**, and **VPN architecture design**.
+
+Source: El Banco Bank Problem Statement Document :contentReference[oaicite:1]{index=1}
+
+---
+
+# 📘 1. Project Overview
+
+As cyber-attacks continue to surge, banking institutions must protect customer data and ensure secure connectivity.  
+This engagement focuses on:
+
+- Identifying and resolving digital certificate issues  
+- Hardening cloud VM access with correct inbound rules  
+- Designing secure VPN connectivity for remote employees  
+- Ensuring strong encryption and secure key exchange  
+
+The goal is to strengthen the bank’s network security posture across multiple layers.
+
+---
+
+# 🎯 2. Client Problem Statement
+
+El Banco Bank requires:
+
+- A security consultant capable of diagnosing certificate-related user issues  
+- Correct cloud inbound rule configuration for VM hosting the bank's website  
+- Secure VPN connectivity for remote users on Ubuntu and Windows  
+- Alignment with modern encryption standards (256-bit SSL/TLS key exchange)  
+
+---
+
+# 🧩 3. Scope of Work
+
+### ✔ In Scope
+- Certificate troubleshooting  
+- VM inbound rule analysis  
+- VPN protocol selection  
+- Encryption requirements  
+- Network access design  
+
+### ✖ Out of Scope
+- Application penetration testing  
+- Malware analysis  
+- On-prem network hardware configuration  
+
+---
+
+# 🧪 4. Case Study Breakdown
+
+---
+
+# 🔹 TASK 1: Certificate Troubleshooting (User-Submitted Tickets)
+
+Three certificate-related issues were reviewed and resolved.
+
+---
+
+## 📝 **Ticket 1 — Certificate Error When Accessing via IP**
+**Submitted by:** Bob Wood (Pen Tester)  
+**Issue:** Browser shows certificate error when the website is accessed via IP.
+
+### ✔ Root Cause  
+Certificates are issued to domain names, not IP addresses.
+
+### ✔ Solution  
+**Use FQDN (Fully Qualified Domain Name)** instead of accessing the website through its IP address.
+
+---
+
+## 📝 **Ticket 2 — Certificate Appears Expired, Despite Renewal**
+**Submitted by:** Sheila Shaz (System Administrator)
+
+### ✔ Root Cause  
+System time mismatch due to **NTP failure** caused the certificate to appear expired.
+
+### ✔ Solution  
+Check NTP service → synchronize system time → confirm no time drift.
+
+---
+
+## 📝 **Ticket 3 — Root Certificate Not Trusted**
+**Submitted by:** James Clay (Software Developer)
+
+### ✔ Root Cause  
+Client system missing trusted root CA certificates.
+
+### ✔ Solution  
+Update the **client root certificate store** and ensure all approved Root CAs are installed.
+
+---
+
+# 🔹 TASK 2: Cloud Inbound Rule Configuration
+
+The VM hosting the bank’s website must be secure, allowing only specific connections.
+
+### ✔ Requirements
+- Public HTTPS access  
+- RDP & SSH restricted to a single authorized IP: **18.66.78.112**  
+- Certificate already configured  
+
+### ✔ Final Inbound Rules (as required)
+
+| Type  | Protocol | Port Range | Source |
+|-------|----------|-------------|--------|
+| HTTPS | TCP | 443 | 0.0.0.0/0 |
+| RDP   | TCP | 3389 | 18.66.78.112/32 |
+| SSH   | TCP | 22 | 18.66.78.112/32 |
+
+### 🔒 Security Notes
+- `0.0.0.0/0` = access from anywhere (IPv4)  
+- `/32` = single host access only  
+- Strict IP whitelisting ensures hardened access control  
+
+---
+
+# 🔹 TASK 3: VPN Connectivity Architecture Design
+
+The bank requires two remote VPN connections:
+
+- **Software Developers (Ubuntu 20.04)**  
+- **General Remote Staff (Windows 10)**  
+
+Both require:
+- 256-bit strong encryption  
+- SSL/TLS for key exchange  
+
+---
+
+## 🔸 **VPN Connection 1 – Ubuntu Developers**
+
+### ✔ Requirements  
+- Connect from home → enterprise software repository  
+- Use an open-source VPN protocol optimized for speed  
+- Route **all** traffic through enterprise network (full tunnel)
+
+### ✔ Recommended Solution  
+| User/OS | VPN Type | Protocol | Tunnel | Port |
+|---------|-----------|----------|--------|------|
+| Ubuntu | Host-to-Host | **OpenVPN** | Full | **UDP 1194** |
+
+---
+
+## 🔸 **VPN Connection 2 – Windows 10 Users**
+
+### ✔ Requirements  
+- Connect from home → enterprise network  
+- Use Microsoft proprietary protocol  
+- Enable **split tunneling** (Netflix allowed outside VPN)
+
+### ✔ Recommended Solution  
+| User/OS | VPN Type | Protocol | Tunnel | Port |
+|---------|-----------|----------|--------|------|
+| Windows 10 | Host-to-Site | **SSTP** | Split | **TCP 443** |
+
+---
+
+# 📉 5. Security Impact Analysis
+
+### ✔ Certificate Troubleshooting Impact
+- Ensures user trust  
+- Avoids man-in-the-middle (MITM) risks  
+- Fixes root CA & time-based certificate failures  
+
+### ✔ Cloud Inbound Rule Hardening Impact
+- Prevents unauthorized RDP/SSH access  
+- Reduces lateral movement risk  
+- Secures public-facing banking services  
+
+### ✔ VPN Architecture Impact
+- Stronger encryption (256-bit)  
+- Proper segmentation (full vs. split tunnel)  
+- OS-appropriate protocol selection  
+- Secure key exchanges via SSL/TLS  
+
+---
+
+# 🧭 6. Recommendations
+
+### 🛡 Strengthen Certificate Lifecycle Management
+- Auto-renew certificates  
+- Monitor CA trust stores  
+- Enforce FQDN-only access  
+
+### 🔒 Harden Remote Access
+- Strict IP whitelisting  
+- MFA for RDP/SSH  
+- Monitor inbound logs  
+
+### 🌐 Improve VPN Security
+- Enforce strong encryption  
+- Periodically rotate VPN certificates  
+- Enable DNS filtering  
+
+---
+
+# 📥 7. Deliverables Provided
+
+- Certificate troubleshooting solutions (3 tickets)  
+- Cloud inbound rule configuration table  
+- VPN protocol selection & architecture design  
+- Encryption & tunnel method breakdown  
+
+All solutions derived from:  
+📄 Capstone Project Problem Statement Document :contentReference[oaicite:2]{index=2}
+
+---
+
+# 🧾 8. Conclusion
+
+This project successfully demonstrates the responsibilities of a **Network Security Consultant** in a high-value banking environment.  
+The solutions implemented strengthen:
+
+- Certificate trust  
+- Cloud access control  
+- Secure remote connectivity  
+- Encryption policies  
+- Network reliability  
+
+El Banco Bank’s network is now more resilient, secure, and compliant with best practices.
+
+---
+
+# 📬 Contact
+
+**GitHub:** https://github.com/rajbharti-cyber  
+**LinkedIn:** https://www.linkedin.com/in/rajbharti-cybersecurity/
